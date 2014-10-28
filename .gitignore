@@ -1,12 +1,3 @@
-#Eclipse
-.project
-.classpath
-.settings
-*.class
-
-#MyEclipse
-.mymetadata
-
-*.bak
-*.myeclipse
-
+/.gitignore.bak
+/.mymetadata
+/.project
