@@ -1,0 +1,63 @@
+@charset "utf-8";
+/*这个css是easyui后台页面用的，包括index_back.jsp,portal_back.jsp,center文件夹下的jsp页面*/
+
+/*整体*/
+body {font-family:helvetica,tahoma,verdana,sans-serif;padding:20px; font-size:12px; margin:0;}
+a {text-decoration: none;}
+/*west的a标签*/
+.easyui-tree li a {font-size: 12px;color: #000;text-decoration: none;}
+
+/*使所有datagrid区域中的图片添加划过特效*/
+.datagrid  td img {
+    cursor: pointer;
+}
+
+/*north中的标题*/
+.site_title {
+	font-size: 26px;
+	font-family: Verdana, Geneva, sans-serif;
+	line-height: 60px;
+	padding: 0px;
+	display: block;
+	font-weight: bold;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+    margin-left: 20px;
+}
+
+/*center表单最常用灰色边框*/
+.easyui_form_input{
+line-height:20px; height:20px;border:1px solid #ccc;
+}
+
+/*弹窗页面布局CSS*/
+.division{ 
+    border-collapse:collapse;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #CCCCCC #BEC6CE #BEC6CE #CCCCCC;
+    border-style: solid;
+    border-width: 1px 2px 2px 1px;
+    line-height: 150%;
+    margin: 10px;
+    padding: 5px;
+    white-space: normal;
+}
+.division td{border-right:#E2E8EB solid 1px;border-bottom:#E2E8EB solid 1px;border-top:#fff solid 1px;margin-top:1px;vertical-align: top; padding:5px;}
+.division th {
+    background: none repeat scroll 0 0 #E2E8EB;
+    border-right: 1px solid #CCCCCC;
+	border-top:1px solid #fff;
+    font-size: 14px;
+    text-align: right;
+    white-space: nowrap;
+    width: 140px;
+	font-weight:normal;
+}
+
+
+/*south部分*/
+#footer {background-color: #F1F1F1;
+		 border-top: 1px solid #D7D7D7;
+		 font-family: Verdana,Arial,Helvetica,sans-serif;
+		 height: 20px;text-align: center;}
