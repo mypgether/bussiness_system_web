@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.myp.model.UserDao;
+import com.myp.model.YwsqDao;
 import com.myp.service.UserService;
 import com.myp.util.StringUtils;
 
@@ -108,6 +109,20 @@ public class UserController {
 		} else {
 			userService.update(user);
 		}
+	}
+
+	@RequestMapping(value = "/load", method = RequestMethod.GET)
+	@ResponseBody
+	public UserDao load(String userId) {
+		System.out.println("-------------------------------------" + userId
+				+ "----------------");
+		UserDao dao = userService.load(Integer.parseInt(userId));
+		for (YwsqDao ywsq : dao.getYwsqsForProposerId()) {
+			System.out.println(ywsq.toString());
+		}
+		System.out.println("dao.getYwsqsForProposerId()"
+				+ dao.getYwsqsForProposerId().size());
+		return dao;
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)

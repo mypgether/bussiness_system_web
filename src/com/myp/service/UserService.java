@@ -17,11 +17,11 @@ public interface UserService {
 
 	int getRowsWithCondition(Map<String, String> params);
 
-	void delete(UserDao user);
+	void delete(UserDao dao);
 
-	void add(UserDao user);
+	void add(UserDao dao);
 
-	void update(UserDao user);
+	void update(UserDao dao);
 
 	UserDao load(int id);
 }

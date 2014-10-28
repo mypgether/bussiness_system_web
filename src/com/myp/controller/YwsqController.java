@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.myp.model.UserDao;
 import com.myp.model.YwsqDao;
 import com.myp.service.UserService;
 import com.myp.service.YwsqService;
@@ -54,8 +53,6 @@ public class YwsqController {
 		dao.setApproveState(0);
 		dao.setApproveReason(null);
 		ywsqService.add(dao);
-		UserDao User = userService.load(179);
-		System.out.println(User.toString());
 	}
 
 	// @RequestMapping(value = "/add", method = RequestMethod.POST)

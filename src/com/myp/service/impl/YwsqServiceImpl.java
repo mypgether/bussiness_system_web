@@ -1,6 +1,5 @@
 package com.myp.service.impl;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.myp.dao.BaseDao;
 import com.myp.model.YwsqDao;
 import com.myp.service.YwsqService;
-import com.myp.util.StringUtils;
+import com.myp.util.HqlUtil;
 
 @Service("ywsqService")
 public class YwsqServiceImpl implements YwsqService {
@@ -48,7 +47,7 @@ public class YwsqServiceImpl implements YwsqService {
 
 	@Override
 	public int getRowsWithCondition(Map<String, String> params) {
-		Object rows = baseDao.getObject(getHql(new StringBuffer(
+		Object rows = baseDao.getObject(HqlUtil.getHql(new StringBuffer(
 				"select count(*) from YwsqDao where 1=1"), params));
 		long result = (Long) rows;
 		return (int) result;
@@ -58,8 +57,8 @@ public class YwsqServiceImpl implements YwsqService {
 	@Override
 	public List<YwsqDao> findWithPageAndCondition(Map<String, String> params,
 			int page, int rows) {
-		return (List<YwsqDao>) baseDao.findWithPage(page, rows,
-				getHql(new StringBuffer("from YwsqDao where 1=1"), params));
+		return (List<YwsqDao>) baseDao.findWithPage(page, rows, HqlUtil.getHql(
+				new StringBuffer("from YwsqDao where 1=1"), params));
 	}
 
 	@Override
@@ -77,17 +76,8 @@ public class YwsqServiceImpl implements YwsqService {
 		baseDao.updateObject(dao);
 	}
 
-	@SuppressWarnings("rawtypes")
-	private String getHql(StringBuffer sb, Map<String, String> params) {
-		for (Iterator iterator = params.entrySet().iterator(); iterator
-				.hasNext();) {
-			Map.Entry entry = (Map.Entry) iterator.next();
-			String key = (String) entry.getKey();
-			String val = (String) entry.getValue();
-			if (!StringUtils.isBlank(val)) {
-				sb.append(" and " + key + " like '%" + val.trim() + "%'");
-			}
-		}
-		return sb.toString();
+	@Override
+	public YwsqDao load(int id) {
+		return (YwsqDao) baseDao.getObject("from YwsqDao where ywId=" + id);
 	}
 }

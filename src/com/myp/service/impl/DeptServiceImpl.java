@@ -1,7 +1,5 @@
 package com.myp.service.impl;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.myp.dao.BaseDao;
 import com.myp.model.DeptDao;
 import com.myp.service.DeptService;
-import com.myp.util.StringUtils;
+import com.myp.util.HqlUtil;
 
 @Service("deptService")
 public class DeptServiceImpl implements DeptService {
@@ -29,18 +27,18 @@ public class DeptServiceImpl implements DeptService {
 	}
 
 	@Override
-	public void delete(DeptDao dept) {
-		baseDao.deleteObject(dept);
+	public void delete(DeptDao dao) {
+		baseDao.deleteObject(dao);
 	}
 
 	@Override
-	public void add(DeptDao dept) {
-		baseDao.addObject(dept);
+	public void add(DeptDao dao) {
+		baseDao.addObject(dao);
 	}
 
 	@Override
-	public void update(DeptDao dept) {
-		baseDao.updateObject(dept);
+	public void update(DeptDao dao) {
+		baseDao.updateObject(dao);
 	}
 
 	@Override
@@ -51,10 +49,8 @@ public class DeptServiceImpl implements DeptService {
 	}
 
 	@Override
-	public int getRowsWithCondition(String deptName) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("deptName", deptName);
-		Object rows = baseDao.getObject(getHql(new StringBuffer(
+	public int getRowsWithCondition(Map<String, String> params) {
+		Object rows = baseDao.getObject(HqlUtil.getHql(new StringBuffer(
 				"select count(*) from DeptDao where 1=1"), params));
 		long result = (Long) rows;
 		return (int) result;
@@ -68,12 +64,10 @@ public class DeptServiceImpl implements DeptService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<DeptDao> findWithPageAndCondition(String deptName, int page,
-			int rows) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("deptName", deptName);
-		return (List<DeptDao>) baseDao.findWithPage(page, rows,
-				getHql(new StringBuffer("from DeptDao where 1=1"), params));
+	public List<DeptDao> findWithPageAndCondition(Map<String, String> params,
+			int page, int rows) {
+		return (List<DeptDao>) baseDao.findWithPage(page, rows, HqlUtil.getHql(
+				new StringBuffer("from DeptDao where 1=1"), params));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -82,17 +76,8 @@ public class DeptServiceImpl implements DeptService {
 		return (List<DeptDao>) baseDao.findAll("from DeptDao");
 	}
 
-	@SuppressWarnings("rawtypes")
-	private String getHql(StringBuffer sb, Map<String, String> params) {
-		for (Iterator iterator = params.entrySet().iterator(); iterator
-				.hasNext();) {
-			Map.Entry entry = (Map.Entry) iterator.next();
-			String key = (String) entry.getKey();
-			String val = (String) entry.getValue();
-			if (!StringUtils.isBlank(val)) {
-				sb.append(" and " + key + " like '%" + val.trim() + "%'");
-			}
-		}
-		return sb.toString();
+	@Override
+	public DeptDao load(int id) {
+		return (DeptDao) baseDao.getObject("from DeptDao where id=" + id);
 	}
 }

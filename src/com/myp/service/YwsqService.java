@@ -17,9 +17,11 @@ public interface YwsqService {
 
 	int getRowsWithCondition(Map<String, String> params);
 
-	void delete(YwsqDao dept);
+	void delete(YwsqDao dao);
 
-	void add(YwsqDao dept);
+	void add(YwsqDao dao);
 
-	void update(YwsqDao dept);
+	void update(YwsqDao dao);
+
+	YwsqDao load(int id);
 }
