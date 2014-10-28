@@ -1,3 +1,11 @@
-/.gitignore.bak
-/.mymetadata
-/.project
+#Eclipse
+.project
+.classpath
+.settings
+*.class
+
+#MyEclipse
+.mymetadata
+
+*.bak
+*.myeclipse
