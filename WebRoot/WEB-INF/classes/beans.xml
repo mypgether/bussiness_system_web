@@ -8,7 +8,7 @@
            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 	<context:annotation-config />
-	<context:component-scan base-package="com.myp" />
+	<context:component-scan base-package="net.bussiness" />
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
@@ -33,14 +33,14 @@
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan">
-			<value>com.myp.model</value>
+			<value>net.bussiness.model</value>
 		</property>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">
 					org.hibernate.dialect.MySQLDialect
 				</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>  
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.format_sql">true</prop>
 				<prop key="hibernate.cache.use_query_cache">false</prop>
@@ -60,7 +60,8 @@
 	</bean>
 
 	<aop:config>
-		<aop:pointcut id="addMethods" expression="execution(* com.myp.service.*.*(..))" />
+		<aop:pointcut id="addMethods"
+			expression="execution(* net.bussiness.service.*.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="addMethods" />
 	</aop:config>
 
