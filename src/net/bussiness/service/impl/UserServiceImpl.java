@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import net.bussiness.dao.BaseDao;
 import net.bussiness.model.UserDao;
 import net.bussiness.service.UserService;
-import net.bussiness.util.HqlUtil;
+import net.bussiness.util.HqlUtils;
 
 import org.springframework.stereotype.Service;
 
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int getRowsWithCondition(Map<String, String> params) {
-		Object rows = baseDao.getObject(HqlUtil.getHql(new StringBuffer(
+		Object rows = baseDao.getObject(HqlUtils.getHql(new StringBuffer(
 				"select count(*) from UserDao"), params));
 		long result = (Long) rows;
 		return (int) result;
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserDao> findWithPageAndCondition(Map<String, String> params,
 			int page, int rows) {
-		return (List<UserDao>) baseDao.findWithPage(page, rows, HqlUtil.getHql(
+		return (List<UserDao>) baseDao.findWithPage(page, rows, HqlUtils.getHql(
 				new StringBuffer("from UserDao where 1=1"), params));
 	}
 
