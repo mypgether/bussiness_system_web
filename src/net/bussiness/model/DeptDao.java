@@ -3,6 +3,7 @@ package net.bussiness.model;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  * Dept entity. @author MyEclipse Persistence Tools
@@ -28,7 +31,9 @@ public class DeptDao implements java.io.Serializable {
 	private Integer createrId;
 	private Date createTime;
 	private String description;
+	@JsonIgnore
 	private Set<PositionDao> positions = new HashSet<PositionDao>(0);
+	@JsonIgnore
 	private Set<UserDao> users = new HashSet<UserDao>(0);
 
 	// Constructors

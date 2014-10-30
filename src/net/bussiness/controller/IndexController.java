@@ -41,22 +41,7 @@ public class IndexController {
 			 * 保存用户Id到session当中
 			 */
 			session.setAttribute("currentUser", iUser.getUserId());
-			/*
-			 * 将结果返回
-			 */
-			UserDao loginUser = new UserDao();
-			loginUser.setId(iUser.getId());
-			loginUser.setUserId(iUser.getUserId());
-			loginUser.setUserName(iUser.getUserName());
-			/*
-			 * 通过这个设置，返回iUser对象也可以。但是不推荐这种方法。
-			 */
-			// iUser.setChatmsgsForReceiverId(null);
-			// iUser.setChatmsgsForSenderId(null);
-			// iUser.setYwsqsForApproverId(null);
-			// iUser.setPosition(null);
-			// iUser.setDept(null);
-			return loginUser;
+			return iUser;
 		}
 		return null;
 	}

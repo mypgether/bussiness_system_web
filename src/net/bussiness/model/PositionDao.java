@@ -2,6 +2,7 @@ package net.bussiness.model;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  * Position entity. @author MyEclipse Persistence Tools
@@ -25,6 +28,7 @@ public class PositionDao implements java.io.Serializable {
 	private Integer id;
 	private DeptDao dept;
 	private String description;
+	@JsonIgnore
 	private Set<UserDao> users = new HashSet<UserDao>(0);
 
 	// Constructors

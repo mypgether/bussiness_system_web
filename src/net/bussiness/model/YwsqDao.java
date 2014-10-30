@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 /**
  * Ywsq entity. @author MyEclipse Persistence Tools
  */
@@ -34,7 +36,9 @@ public class YwsqDao implements java.io.Serializable {
 	private Integer approveState;
 	private Date approveTime;
 	private String approveReason;
+	@JsonIgnore
 	private Set<YwnrDao> ywnrs = new HashSet<YwnrDao>(0);
+	@JsonIgnore
 	private Set<YwpjDao> ywpjs = new HashSet<YwpjDao>(0);
 
 	// Constructors

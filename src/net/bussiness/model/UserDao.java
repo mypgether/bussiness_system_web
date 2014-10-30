@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 /**
  * User entity. @author MyEclipse Persistence Tools
  */
@@ -37,9 +39,13 @@ public class UserDao implements java.io.Serializable {
 	private String email;
 	private Date joinTime;
 	private String description;
+	@JsonIgnore
 	private Set<YwsqDao> ywsqsForProposerId = new HashSet<YwsqDao>(0);
+	@JsonIgnore
 	private Set<YwsqDao> ywsqsForApproverId = new HashSet<YwsqDao>(0);
+	@JsonIgnore
 	private Set<ChatmsgDao> chatmsgsForSenderId = new HashSet<ChatmsgDao>(0);
+	@JsonIgnore
 	private Set<ChatmsgDao> chatmsgsForReceiverId = new HashSet<ChatmsgDao>(0);
 
 	// Constructors
@@ -83,7 +89,7 @@ public class UserDao implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "positionId", referencedColumnName = "id")
 	public PositionDao getPosition() {
 		return this.position;
@@ -93,7 +99,7 @@ public class UserDao implements java.io.Serializable {
 		this.position = position;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "deptId", referencedColumnName = "id")
 	public DeptDao getDept() {
 		return this.dept;

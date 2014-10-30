@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 /**
  * Ywnr entity. @author MyEclipse Persistence Tools
  */
@@ -29,6 +31,7 @@ public class YwnrDao implements java.io.Serializable {
 	private Date nrTime;
 	private String nrLocation;
 	private String description;
+	@JsonIgnore
 	private Set<YwnrPhotosDao> ywnrPhotoses = new HashSet<YwnrPhotosDao>(0);
 
 	// Constructors
