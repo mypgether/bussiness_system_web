@@ -66,7 +66,7 @@ public class YwsqController {
 		}
 	}
 
-	@RequestMapping(value = "/findYwsqsWithPage", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/findYwsqsWithPage", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String findYwsqsWithPage(HttpServletRequest request) {
 		int page = 0;
@@ -83,19 +83,25 @@ public class YwsqController {
 		return JsonStrUtils.getJsonResult(totol, list);
 	}
 
-	@RequestMapping(value = "/{userId}/findApproveYwsqsWithPA", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/{userId}/findApproveYwsqsWithPC", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String findApproveYwsqsWithPA(@PathVariable String userId,
+	public String findApproveYwsqsWithPC(@PathVariable String userId,
 			HttpServletRequest request) {
 		int page = 0;
 		int rows = 0;
+		int approveState = 0;
+		Map<String, String> params = new HashMap<String, String>();
 		if (!StringUtils.isBlank(request.getParameter("page"))) {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
 		if (!StringUtils.isBlank(request.getParameter("rows"))) {
 			rows = Integer.parseInt(request.getParameter("rows"));
 		}
-		Map<String, String> params = new HashMap<String, String>();
+		if (!StringUtils.isBlank(request.getParameter("approveState"))) {
+			approveState = Integer.parseInt(request
+					.getParameter("approveState"));
+			params.put("approveState", approveState + "");
+		}
 		params.put("approverId", userId);
 		List<YwsqDao> list = ywsqService.findWithPageAndCondition(params, page,
 				rows);
@@ -104,19 +110,25 @@ public class YwsqController {
 		return JsonStrUtils.getJsonResult(totol, list);
 	}
 
-	@RequestMapping(value = "/{userId}/findProposeYwsqsWithPA", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/{userId}/findProposeYwsqsWithPC", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String findProposeYwsqsWithPA(@PathVariable String userId,
+	public String findProposeYwsqsWithPC(@PathVariable String userId,
 			HttpServletRequest request) {
 		int page = 0;
 		int rows = 0;
+		int approveState = 0;
+		Map<String, String> params = new HashMap<String, String>();
 		if (!StringUtils.isBlank(request.getParameter("page"))) {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
 		if (!StringUtils.isBlank(request.getParameter("rows"))) {
 			rows = Integer.parseInt(request.getParameter("rows"));
 		}
-		Map<String, String> params = new HashMap<String, String>();
+		if (!StringUtils.isBlank(request.getParameter("approveState"))) {
+			approveState = Integer.parseInt(request
+					.getParameter("approveState"));
+			params.put("approveState", approveState + "");
+		}
 		params.put("proposerId", userId);
 		List<YwsqDao> list = ywsqService.findWithPageAndCondition(params, page,
 				rows);
