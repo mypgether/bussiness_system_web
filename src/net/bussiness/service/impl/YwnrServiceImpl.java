@@ -6,14 +6,14 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import net.bussiness.dao.BaseDao;
-import net.bussiness.model.YwsqDto;
-import net.bussiness.service.YwsqService;
+import net.bussiness.model.YwnrDto;
+import net.bussiness.service.YwnrService;
 import net.bussiness.util.HqlUtils;
 
 import org.springframework.stereotype.Service;
 
-@Service("ywsqService")
-public class YwsqServiceImpl implements YwsqService {
+@Service("ywnrService")
+public class YwnrServiceImpl implements YwnrService {
 
 	private BaseDao baseDao;
 
@@ -28,37 +28,37 @@ public class YwsqServiceImpl implements YwsqService {
 
 	@Override
 	public int getRows() {
-		Object rows = baseDao.getObject("select count(*) from YwsqDto");
+		Object rows = baseDao.getObject("select count(*) from YwnrDto");
 		long result = (Long) rows;
 		return (int) result;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<YwsqDto> findWithPage(int page, int rows) {
-		return (List<YwsqDto>) baseDao.findWithPage(page, rows, "from YwsqDto");
+	public List<YwnrDto> findWithPage(int page, int rows) {
+		return (List<YwnrDto>) baseDao.findWithPage(page, rows, "from YwnrDto");
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<YwsqDto> findAll() {
-		return (List<YwsqDto>) baseDao.findAll("from YwsqDto");
+	public List<YwnrDto> findAll() {
+		return (List<YwnrDto>) baseDao.findAll("from YwnrDto");
 	}
 
 	@Override
 	public int getRowsWithCondition(Map<String, String> params) {
 		Object rows = baseDao.getObject(HqlUtils.getHql(new StringBuffer(
-				"select count(*) from YwsqDto where 1=1"), params));
+				"select count(*) from YwnrDto where 1=1"), params));
 		long result = (Long) rows;
 		return (int) result;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<YwsqDto> findWithPageAndCondition(Map<String, String> params,
+	public List<YwnrDto> findWithPageAndCondition(Map<String, String> params,
 			int page, int rows) {
-		return (List<YwsqDto>) baseDao.findWithPage(page, rows, HqlUtils
-				.getHql(new StringBuffer("from YwsqDto where 1=1"), params));
+		return (List<YwnrDto>) baseDao.findWithPage(page, rows, HqlUtils
+				.getHql(new StringBuffer("from YwnrDto where 1=1"), params));
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class YwsqServiceImpl implements YwsqService {
 	}
 
 	@Override
-	public YwsqDto load(int id) {
-		return (YwsqDto) baseDao.getObject("from YwsqDto where ywId=" + id);
+	public YwnrDto load(int id) {
+		return (YwnrDto) baseDao.getObject("from YwnrDto where ywId=" + id);
 	}
 }

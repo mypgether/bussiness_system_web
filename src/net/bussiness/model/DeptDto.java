@@ -16,13 +16,16 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * Dept entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "dept", catalog = "bussiness_system")
-public class DeptDao implements java.io.Serializable {
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler",
+		"fieldHandler" })
+public class DeptDto implements java.io.Serializable {
 
 	// Fields
 
@@ -32,19 +35,19 @@ public class DeptDao implements java.io.Serializable {
 	private Date createTime;
 	private String description;
 	@JsonIgnore
-	private Set<PositionDao> positions = new HashSet<PositionDao>(0);
+	private Set<PositionDto> positions = new HashSet<PositionDto>(0);
 	@JsonIgnore
-	private Set<UserDao> users = new HashSet<UserDao>(0);
+	private Set<UserDto> users = new HashSet<UserDto>(0);
 
 	// Constructors
 
 	/** default constructor */
-	public DeptDao() {
+	public DeptDto() {
 	}
 
 	/** full constructor */
-	public DeptDao(String deptName, Integer createrId, Date createTime,
-			String description, Set<PositionDao> positions, Set<UserDao> users) {
+	public DeptDto(String deptName, Integer createrId, Date createTime,
+			String description, Set<PositionDto> positions, Set<UserDto> users) {
 		this.deptName = deptName;
 		this.createrId = createrId;
 		this.createTime = createTime;
@@ -103,20 +106,20 @@ public class DeptDao implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "dept")
-	public Set<PositionDao> getPositions() {
+	public Set<PositionDto> getPositions() {
 		return this.positions;
 	}
 
-	public void setPositions(Set<PositionDao> positions) {
+	public void setPositions(Set<PositionDto> positions) {
 		this.positions = positions;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "dept")
-	public Set<UserDao> getUsers() {
+	public Set<UserDto> getUsers() {
 		return this.users;
 	}
 
-	public void setUsers(Set<UserDao> users) {
+	public void setUsers(Set<UserDto> users) {
 		this.users = users;
 	}
 

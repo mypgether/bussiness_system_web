@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 
- * @author yh
+ * @author myp
  */
 public class SessionInterceptor implements HandlerInterceptor {
 
@@ -22,7 +22,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object o) throws Exception {
 		// 1、请求到登录页面 放行
-		logger.log(Level.INFO, request.getServletPath());
+		/*logger.log(Level.INFO, request.getServletPath());
 		if (request.getServletPath().startsWith("/login")) {
 			return true;
 		}
@@ -38,7 +38,8 @@ public class SessionInterceptor implements HandlerInterceptor {
 		// 重定向到登录页面
 		logger.log(Level.INFO, "user not login");
 		response.sendRedirect("hello.jsp");
-		return false;
+		return true;*/
+		return true;
 	}
 
 	@Override

@@ -16,33 +16,36 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * Ywnr entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "ywnr", catalog = "bussiness_system")
-public class YwnrDao implements java.io.Serializable {
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler",
+		"fieldHandler" })
+public class YwnrDto implements java.io.Serializable {
 
 	// Fields
 
 	private Integer id;
-	private YwsqDao ywsq;
+	private YwsqDto ywsq;
 	private Date nrTime;
 	private String nrLocation;
 	private String description;
 	@JsonIgnore
-	private Set<YwnrPhotosDao> ywnrPhotoses = new HashSet<YwnrPhotosDao>(0);
+	private Set<YwnrPhotosDto> ywnrPhotoses = new HashSet<YwnrPhotosDto>(0);
 
 	// Constructors
 
 	/** default constructor */
-	public YwnrDao() {
+	public YwnrDto() {
 	}
 
 	/** full constructor */
-	public YwnrDao(YwsqDao ywsq, Date nrTime, String nrLocation,
-			String description, Set<YwnrPhotosDao> ywnrPhotoses) {
+	public YwnrDto(YwsqDto ywsq, Date nrTime, String nrLocation,
+			String description, Set<YwnrPhotosDto> ywnrPhotoses) {
 		this.ywsq = ywsq;
 		this.nrTime = nrTime;
 		this.nrLocation = nrLocation;
@@ -64,11 +67,11 @@ public class YwnrDao implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ywId", referencedColumnName = "ywId")
-	public YwsqDao getYwsq() {
+	public YwsqDto getYwsq() {
 		return ywsq;
 	}
 
-	public void setYwsq(YwsqDao ywsq) {
+	public void setYwsq(YwsqDto ywsq) {
 		this.ywsq = ywsq;
 	}
 
@@ -100,11 +103,11 @@ public class YwnrDao implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "ywnr")
-	public Set<YwnrPhotosDao> getYwnrPhotoses() {
+	public Set<YwnrPhotosDto> getYwnrPhotoses() {
 		return this.ywnrPhotoses;
 	}
 
-	public void setYwnrPhotoses(Set<YwnrPhotosDao> ywnrPhotoses) {
+	public void setYwnrPhotoses(Set<YwnrPhotosDto> ywnrPhotoses) {
 		this.ywnrPhotoses = ywnrPhotoses;
 	}
 

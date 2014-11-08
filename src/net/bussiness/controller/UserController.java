@@ -8,8 +8,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import net.bussiness.model.UserDao;
-import net.bussiness.model.YwsqDao;
+import net.bussiness.model.UserDto;
+import net.bussiness.model.YwsqDto;
 import net.bussiness.service.UserService;
 import net.bussiness.util.StringUtils;
 
@@ -52,7 +52,8 @@ public class UserController {
 		if (!StringUtils.isBlank(request.getParameter("rows"))) {
 			rows = Integer.parseInt(request.getParameter("rows"));
 		}
-		List<UserDao> list = userService.findWithPage(page, rows);
+		List<UserDto> list = (List<UserDto>) userService.findWithPage(page,
+				rows);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("total", userService.getRows());
 		map.put("rows", list);
@@ -73,9 +74,9 @@ public class UserController {
 	@RequestMapping(value = "/findUsersName", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String findUsersName() {
-		List<UserDao> list = userService.findAll();
+		List<UserDto> list = (List<UserDto>) userService.findAll();
 		List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
-		for (UserDao user : list) {
+		for (UserDto user : list) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("lable", user.getUserName());
 			map.put("value", user.getUserId());
@@ -97,13 +98,13 @@ public class UserController {
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
-	public void delete(UserDao user) {
+	public void delete(UserDto user) {
 		userService.delete(user);
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
-	public void update(UserDao user) {
+	public void update(UserDto user) {
 		if (user.getId() == 0) {
 			userService.add(user);
 		} else {
@@ -113,11 +114,11 @@ public class UserController {
 
 	@RequestMapping(value = "/load", method = RequestMethod.GET)
 	@ResponseBody
-	public UserDao load(String userId) {
+	public UserDto load(String userId) {
 		System.out.println("-------------------------------------" + userId
 				+ "----------------");
-		UserDao dao = userService.load(Integer.parseInt(userId));
-		for (YwsqDao ywsq : dao.getYwsqsForProposerId()) {
+		UserDto dao = (UserDto) userService.load(Integer.parseInt(userId));
+		for (YwsqDto ywsq : dao.getYwsqsForProposerId()) {
 			System.out.println(ywsq.toString());
 		}
 		System.out.println("dao.getYwsqsForProposerId()"
@@ -127,12 +128,12 @@ public class UserController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String add(ModelMap model) {
-		model.addAttribute(new UserDao());
+		model.addAttribute(new UserDto());
 		return "user/add";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String add(UserDao user) {
+	public String add(UserDto user) {
 		userService.add(user);
 		return "user/users";
 	}
