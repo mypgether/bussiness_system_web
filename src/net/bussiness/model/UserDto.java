@@ -19,18 +19,21 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * User entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "user", catalog = "bussiness_system")
-public class UserDao implements java.io.Serializable {
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler",
+		"fieldHandler" })
+public class UserDto implements java.io.Serializable {
 
 	// Fields
 	private Integer id;
-	private PositionDao position;
-	private DeptDao dept;
+	private PositionDto position;
+	private DeptDto dept;
 	private Integer userId;
 	private String userName;
 	private String password;
@@ -40,27 +43,27 @@ public class UserDao implements java.io.Serializable {
 	private Date joinTime;
 	private String description;
 	@JsonIgnore
-	private Set<YwsqDao> ywsqsForProposerId = new HashSet<YwsqDao>(0);
+	private Set<YwsqDto> ywsqsForProposerId = new HashSet<YwsqDto>(0);
 	@JsonIgnore
-	private Set<YwsqDao> ywsqsForApproverId = new HashSet<YwsqDao>(0);
+	private Set<YwsqDto> ywsqsForApproverId = new HashSet<YwsqDto>(0);
 	@JsonIgnore
-	private Set<ChatmsgDao> chatmsgsForSenderId = new HashSet<ChatmsgDao>(0);
+	private Set<ChatmsgDto> chatmsgsForSenderId = new HashSet<ChatmsgDto>(0);
 	@JsonIgnore
-	private Set<ChatmsgDao> chatmsgsForReceiverId = new HashSet<ChatmsgDao>(0);
+	private Set<ChatmsgDto> chatmsgsForReceiverId = new HashSet<ChatmsgDto>(0);
 
 	// Constructors
 
 	/** default constructor */
-	public UserDao() {
+	public UserDto() {
 	}
 
 	/** full constructor */
-	public UserDao(PositionDao position, DeptDao dept, Integer userId,
+	public UserDto(PositionDto position, DeptDto dept, Integer userId,
 			String userName, String password, byte[] photo, String tel,
 			String email, Date joinTime, String description,
-			Set<YwsqDao> ywsqsForProposerId, Set<YwsqDao> ywsqsForApproverId,
-			Set<ChatmsgDao> chatmsgsForSenderId,
-			Set<ChatmsgDao> chatmsgsForReceiverId) {
+			Set<YwsqDto> ywsqsForProposerId, Set<YwsqDto> ywsqsForApproverId,
+			Set<ChatmsgDto> chatmsgsForSenderId,
+			Set<ChatmsgDto> chatmsgsForReceiverId) {
 		this.position = position;
 		this.dept = dept;
 		this.userId = userId;
@@ -91,21 +94,21 @@ public class UserDao implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "positionId", referencedColumnName = "id")
-	public PositionDao getPosition() {
+	public PositionDto getPosition() {
 		return this.position;
 	}
 
-	public void setPosition(PositionDao position) {
+	public void setPosition(PositionDto position) {
 		this.position = position;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "deptId", referencedColumnName = "id")
-	public DeptDao getDept() {
+	public DeptDto getDept() {
 		return this.dept;
 	}
 
-	public void setDept(DeptDao dept) {
+	public void setDept(DeptDto dept) {
 		this.dept = dept;
 	}
 
@@ -183,38 +186,38 @@ public class UserDao implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userByProposerId")
-	public Set<YwsqDao> getYwsqsForProposerId() {
+	public Set<YwsqDto> getYwsqsForProposerId() {
 		return this.ywsqsForProposerId;
 	}
 
-	public void setYwsqsForProposerId(Set<YwsqDao> ywsqsForProposerId) {
+	public void setYwsqsForProposerId(Set<YwsqDto> ywsqsForProposerId) {
 		this.ywsqsForProposerId = ywsqsForProposerId;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userByApproverId")
-	public Set<YwsqDao> getYwsqsForApproverId() {
+	public Set<YwsqDto> getYwsqsForApproverId() {
 		return this.ywsqsForApproverId;
 	}
 
-	public void setYwsqsForApproverId(Set<YwsqDao> ywsqsForApproverId) {
+	public void setYwsqsForApproverId(Set<YwsqDto> ywsqsForApproverId) {
 		this.ywsqsForApproverId = ywsqsForApproverId;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userBySenderId")
-	public Set<ChatmsgDao> getChatmsgsForSenderId() {
+	public Set<ChatmsgDto> getChatmsgsForSenderId() {
 		return this.chatmsgsForSenderId;
 	}
 
-	public void setChatmsgsForSenderId(Set<ChatmsgDao> chatmsgsForSenderId) {
+	public void setChatmsgsForSenderId(Set<ChatmsgDto> chatmsgsForSenderId) {
 		this.chatmsgsForSenderId = chatmsgsForSenderId;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userByReceiverId")
-	public Set<ChatmsgDao> getChatmsgsForReceiverId() {
+	public Set<ChatmsgDto> getChatmsgsForReceiverId() {
 		return this.chatmsgsForReceiverId;
 	}
 
-	public void setChatmsgsForReceiverId(Set<ChatmsgDao> chatmsgsForReceiverId) {
+	public void setChatmsgsForReceiverId(Set<ChatmsgDto> chatmsgsForReceiverId) {
 		this.chatmsgsForReceiverId = chatmsgsForReceiverId;
 	}
 

@@ -14,12 +14,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "ywpj", catalog = "bussiness_system")
-public class YwpjDao implements java.io.Serializable {
+public class YwpjDto implements java.io.Serializable {
 
 	// Fields
 
 	private Integer id;
-	private YwsqDao ywsq;
+	private YwsqDto ywsq;
 	private Integer remarkerId;
 	private double ranker;
 	private String remark;
@@ -27,11 +27,11 @@ public class YwpjDao implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public YwpjDao() {
+	public YwpjDto() {
 	}
 
 	/** full constructor */
-	public YwpjDao(YwsqDao ywsq, Integer remarkerId, double ranker,
+	public YwpjDto(YwsqDto ywsq, Integer remarkerId, double ranker,
 			String remark) {
 		this.ywsq = ywsq;
 		this.remarkerId = remarkerId;
@@ -53,11 +53,11 @@ public class YwpjDao implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ywId", referencedColumnName = "ywId")
-	public YwsqDao getYwsq() {
+	public YwsqDto getYwsq() {
 		return this.ywsq;
 	}
 
-	public void setYwsq(YwsqDao ywsq) {
+	public void setYwsq(YwsqDto ywsq) {
 		this.ywsq = ywsq;
 	}
 

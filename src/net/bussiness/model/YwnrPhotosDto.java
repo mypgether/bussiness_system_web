@@ -16,22 +16,22 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "ywnr_photos", catalog = "bussiness_system")
-public class YwnrPhotosDao implements java.io.Serializable {
+public class YwnrPhotosDto implements java.io.Serializable {
 
 	// Fields
 
 	private Integer id;
-	private YwnrDao ywnr;
+	private YwnrDto ywnr;
 	private byte[] photo;
 
 	// Constructors
 
 	/** default constructor */
-	public YwnrPhotosDao() {
+	public YwnrPhotosDto() {
 	}
 
 	/** full constructor */
-	public YwnrPhotosDao(YwnrDao ywnr, byte[] photo) {
+	public YwnrPhotosDto(YwnrDto ywnr, byte[] photo) {
 		this.ywnr = ywnr;
 		this.photo = photo;
 	}
@@ -50,11 +50,11 @@ public class YwnrPhotosDao implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ywnrId", referencedColumnName = "id")
-	public YwnrDao getYwnr() {
+	public YwnrDto getYwnr() {
 		return this.ywnr;
 	}
 
-	public void setYwnr(YwnrDao ywnr) {
+	public void setYwnr(YwnrDto ywnr) {
 		this.ywnr = ywnr;
 	}
 

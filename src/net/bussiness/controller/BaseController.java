@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.bussiness.model.UserDao;
+import net.bussiness.model.UserDto;
 
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -12,12 +12,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 public class BaseController implements Serializable {
 
-	public void addSessionUser(String name, UserDao user) {
+	public void addSessionUser(String name, UserDto user) {
 		RequestAttributes ra = RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = ((ServletRequestAttributes) ra)
 				.getRequest();
 		request.getSession().setAttribute(name, user);
-
 	}
 
 	public Object getUserAttribute(String name) {

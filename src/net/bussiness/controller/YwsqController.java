@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import net.bussiness.model.YwsqDao;
+import net.bussiness.model.YwsqDto;
 import net.bussiness.service.YwsqService;
 import net.bussiness.util.JsonStrUtils;
 import net.bussiness.util.StringUtils;
@@ -40,25 +40,25 @@ public class YwsqController {
 
 	@RequestMapping(value = "/{userId}/add", method = RequestMethod.GET)
 	public String add(ModelMap model) {
-		model.addAttribute(new YwsqDao());
+		model.addAttribute(new YwsqDto());
 		return "ywsq/add";
 	}
 
 	@RequestMapping(value = "/{userId}/add", method = RequestMethod.POST)
-	public String add(YwsqDao ywsqDao) {
+	public String add(YwsqDto ywsqDao) {
 		ywsqService.add(ywsqDao);
 		return "ywsq/ywsqs";
 	}
 
 	@RequestMapping(value = "/{userId}/delete", method = RequestMethod.POST)
 	@ResponseBody
-	public void delete(YwsqDao ywsqDao) {
+	public void delete(YwsqDto ywsqDao) {
 		ywsqService.delete(ywsqDao);
 	}
 
 	@RequestMapping(value = "/{userId}/update", method = RequestMethod.POST)
 	@ResponseBody
-	public void update(YwsqDao ywsqDao) {
+	public void update(YwsqDto ywsqDao) {
 		if (ywsqDao.getYwId() == 0) {
 			ywsqService.add(ywsqDao);
 		} else {
@@ -77,7 +77,8 @@ public class YwsqController {
 		if (!StringUtils.isBlank(request.getParameter("rows"))) {
 			rows = Integer.parseInt(request.getParameter("rows"));
 		}
-		List<YwsqDao> list = ywsqService.findWithPage(page, rows);
+		List<YwsqDto> list = (List<YwsqDto>) ywsqService.findWithPage(page,
+				rows);
 		int totol = ywsqService.getRows();
 		System.out.println(JsonStrUtils.getJsonResult(totol, list));
 		return JsonStrUtils.getJsonResult(totol, list);
@@ -103,8 +104,8 @@ public class YwsqController {
 			params.put("approveState", approveState + "");
 		}
 		params.put("approverId", userId);
-		List<YwsqDao> list = ywsqService.findWithPageAndCondition(params, page,
-				rows);
+		List<YwsqDto> list = (List<YwsqDto>) ywsqService
+				.findWithPageAndCondition(params, page, rows);
 		int totol = ywsqService.getRowsWithCondition(params);
 		System.out.println(JsonStrUtils.getJsonResult(totol, list));
 		return JsonStrUtils.getJsonResult(totol, list);
@@ -130,8 +131,8 @@ public class YwsqController {
 			params.put("approveState", approveState + "");
 		}
 		params.put("proposerId", userId);
-		List<YwsqDao> list = ywsqService.findWithPageAndCondition(params, page,
-				rows);
+		List<YwsqDto> list = (List<YwsqDto>) ywsqService
+				.findWithPageAndCondition(params, page, rows);
 		int totol = ywsqService.getRowsWithCondition(params);
 		System.out.println(JsonStrUtils.getJsonResult(totol, list));
 		return JsonStrUtils.getJsonResult(totol, list);

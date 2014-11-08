@@ -16,19 +16,22 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * Ywsq entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "ywsq", catalog = "bussiness_system")
-public class YwsqDao implements java.io.Serializable {
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler",
+		"fieldHandler" })
+public class YwsqDto implements java.io.Serializable {
 
 	// Fields
 
 	private Integer ywId;
-	private UserDao userByProposerId;
-	private UserDao userByApproverId;
+	private UserDto userByProposerId;
+	private UserDto userByApproverId;
 	private String location;
 	private Date timestamp;
 	private String reason;
@@ -37,21 +40,21 @@ public class YwsqDao implements java.io.Serializable {
 	private Date approveTime;
 	private String approveReason;
 	@JsonIgnore
-	private Set<YwnrDao> ywnrs = new HashSet<YwnrDao>(0);
+	private Set<YwnrDto> ywnrs = new HashSet<YwnrDto>(0);
 	@JsonIgnore
-	private Set<YwpjDao> ywpjs = new HashSet<YwpjDao>(0);
+	private Set<YwpjDto> ywpjs = new HashSet<YwpjDto>(0);
 
 	// Constructors
 
 	/** default constructor */
-	public YwsqDao() {
+	public YwsqDto() {
 	}
 
 	/** full constructor */
-	public YwsqDao(UserDao userByProposerId, UserDao userByApproverId,
+	public YwsqDto(UserDto userByProposerId, UserDto userByApproverId,
 			String location, Date timestamp, String reason, Date applyTime,
 			Integer approveState, Date approveTime, String approveReason,
-			Set<YwnrDao> ywnrs, Set<YwpjDao> ywpjs) {
+			Set<YwnrDto> ywnrs, Set<YwpjDto> ywpjs) {
 		this.userByProposerId = userByProposerId;
 		this.userByApproverId = userByApproverId;
 		this.location = location;
@@ -79,21 +82,21 @@ public class YwsqDao implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "proposerId", referencedColumnName = "userId")
-	public UserDao getUserByProposerId() {
+	public UserDto getUserByProposerId() {
 		return this.userByProposerId;
 	}
 
-	public void setUserByProposerId(UserDao userByProposerId) {
+	public void setUserByProposerId(UserDto userByProposerId) {
 		this.userByProposerId = userByProposerId;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "approverId", referencedColumnName = "userId")
-	public UserDao getUserByApproverId() {
+	public UserDto getUserByApproverId() {
 		return this.userByApproverId;
 	}
 
-	public void setUserByApproverId(UserDao userByApproverId) {
+	public void setUserByApproverId(UserDto userByApproverId) {
 		this.userByApproverId = userByApproverId;
 	}
 
@@ -161,20 +164,20 @@ public class YwsqDao implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "ywsq")
-	public Set<YwnrDao> getYwnrs() {
+	public Set<YwnrDto> getYwnrs() {
 		return this.ywnrs;
 	}
 
-	public void setYwnrs(Set<YwnrDao> ywnrs) {
+	public void setYwnrs(Set<YwnrDto> ywnrs) {
 		this.ywnrs = ywnrs;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "ywsq")
-	public Set<YwpjDao> getYwpjs() {
+	public Set<YwpjDto> getYwpjs() {
 		return this.ywpjs;
 	}
 
-	public void setYwpjs(Set<YwpjDao> ywpjs) {
+	public void setYwpjs(Set<YwpjDto> ywpjs) {
 		this.ywpjs = ywpjs;
 	}
 

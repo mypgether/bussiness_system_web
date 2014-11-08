@@ -15,30 +15,33 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * Position entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "position", catalog = "bussiness_system")
-public class PositionDao implements java.io.Serializable {
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler",
+		"fieldHandler" })
+public class PositionDto implements java.io.Serializable {
 
 	// Fields
 
 	private Integer id;
-	private DeptDao dept;
+	private DeptDto dept;
 	private String description;
 	@JsonIgnore
-	private Set<UserDao> users = new HashSet<UserDao>(0);
+	private Set<UserDto> users = new HashSet<UserDto>(0);
 
 	// Constructors
 
 	/** default constructor */
-	public PositionDao() {
+	public PositionDto() {
 	}
 
 	/** full constructor */
-	public PositionDao(DeptDao dept, String description, Set<UserDao> users) {
+	public PositionDto(DeptDto dept, String description, Set<UserDto> users) {
 		this.dept = dept;
 		this.description = description;
 		this.users = users;
@@ -58,11 +61,11 @@ public class PositionDao implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "deptId", referencedColumnName = "id")
-	public DeptDao getDept() {
+	public DeptDto getDept() {
 		return this.dept;
 	}
 
-	public void setDept(DeptDao dept) {
+	public void setDept(DeptDto dept) {
 		this.dept = dept;
 	}
 
@@ -76,11 +79,11 @@ public class PositionDao implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "position")
-	public Set<UserDao> getUsers() {
+	public Set<UserDto> getUsers() {
 		return this.users;
 	}
 
-	public void setUsers(Set<UserDao> users) {
+	public void setUsers(Set<UserDto> users) {
 		this.users = users;
 	}
 

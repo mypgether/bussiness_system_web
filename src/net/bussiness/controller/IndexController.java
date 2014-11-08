@@ -3,7 +3,7 @@ package net.bussiness.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import net.bussiness.model.UserDao;
+import net.bussiness.model.UserDto;
 import net.bussiness.service.UserService;
 
 import org.springframework.stereotype.Controller;
@@ -31,8 +31,8 @@ public class IndexController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public UserDao login(UserDao user, HttpSession session) {
-		UserDao iUser = userService.load(user.getUserId());
+	public UserDto login(UserDto user, HttpSession session) {
+		UserDto iUser = (UserDto) userService.load(user.getUserId());
 		/*
 		 * 用户名和密码匹配，登录成功
 		 */

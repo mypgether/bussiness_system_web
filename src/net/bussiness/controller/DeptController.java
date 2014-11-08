@@ -8,7 +8,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import net.bussiness.model.DeptDao;
+import net.bussiness.model.DeptDto;
 import net.bussiness.service.DeptService;
 import net.bussiness.util.StringUtils;
 
@@ -51,7 +51,7 @@ public class DeptController {
 		if (!StringUtils.isBlank(request.getParameter("rows"))) {
 			rows = Integer.parseInt(request.getParameter("rows"));
 		}
-		List<DeptDao> list = deptService.findWithPage(page, rows);
+		List<DeptDto> list = (List<DeptDto>) deptService.findWithPage(page, rows);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("total", deptService.getRows());
 		map.put("rows", list);
@@ -72,9 +72,9 @@ public class DeptController {
 	@RequestMapping(value = "/findDeptsName", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String findDeptsName() {
-		List<DeptDao> list = deptService.findAll();
+		List<DeptDto> list = (List<DeptDto>) deptService.findAll();
 		List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
-		for (DeptDao dept : list) {
+		for (DeptDto dept : list) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("lable", dept.getDeptName());
 			map.put("value", dept.getId());
@@ -96,13 +96,13 @@ public class DeptController {
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
-	public void delete(DeptDao dept) {
+	public void delete(DeptDto dept) {
 		deptService.delete(dept);
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
-	public void update(DeptDao dept) {
+	public void update(DeptDto dept) {
 		System.out.println(dept.toString());
 		if (dept.getId() == 0) {
 			deptService.add(dept);
@@ -113,12 +113,12 @@ public class DeptController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String add(ModelMap model) {
-		model.addAttribute(new DeptDao());
+		model.addAttribute(new DeptDto());
 		return "dept/add";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String add(DeptDao dept) {
+	public String add(DeptDto dept) {
 		deptService.add(dept);
 		return "dept/depts";
 	}

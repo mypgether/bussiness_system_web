@@ -17,13 +17,13 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "chatmsg", catalog = "bussiness_system")
-public class ChatmsgDao implements java.io.Serializable {
+public class ChatmsgDto implements java.io.Serializable {
 
 	// Fields
 
 	private Integer msgId;
-	private UserDao userBySenderId;
-	private UserDao userByReceiverId;
+	private UserDto userBySenderId;
+	private UserDto userByReceiverId;
 	private Integer msgType;
 	private byte[] msgContent;
 	private Date msgTime;
@@ -31,11 +31,11 @@ public class ChatmsgDao implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public ChatmsgDao() {
+	public ChatmsgDto() {
 	}
 
 	/** full constructor */
-	public ChatmsgDao(UserDao userBySenderId, UserDao userByReceiverId,
+	public ChatmsgDto(UserDto userBySenderId, UserDto userByReceiverId,
 			Integer msgType, byte[] msgContent, Date msgTime) {
 		this.userBySenderId = userBySenderId;
 		this.userByReceiverId = userByReceiverId;
@@ -58,21 +58,21 @@ public class ChatmsgDao implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "senderId", referencedColumnName = "userId")
-	public UserDao getUserBySenderId() {
+	public UserDto getUserBySenderId() {
 		return this.userBySenderId;
 	}
 
-	public void setUserBySenderId(UserDao userBySenderId) {
+	public void setUserBySenderId(UserDto userBySenderId) {
 		this.userBySenderId = userBySenderId;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "receiverId", referencedColumnName = "userId")
-	public UserDao getUserByReceiverId() {
+	public UserDto getUserByReceiverId() {
 		return this.userByReceiverId;
 	}
 
-	public void setUserByReceiverId(UserDao userByReceiverId) {
+	public void setUserByReceiverId(UserDto userByReceiverId) {
 		this.userByReceiverId = userByReceiverId;
 	}
 
