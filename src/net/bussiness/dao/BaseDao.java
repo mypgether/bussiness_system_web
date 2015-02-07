@@ -7,6 +7,8 @@ public interface BaseDao {
 
 	void deleteObject(Object obj);
 
+	void delete(String hql);
+
 	void updateObject(Object obj);
 
 	Object getObject(String hql);
@@ -14,4 +16,8 @@ public interface BaseDao {
 	List<?> findAll(String hql);
 
 	List<?> findWithPage(int page, int rows, String hql);
+
+	List<?> findWithCondition(String hql);
+
+	List<?> findWithPageAndHql(int page, int rows, String hql);
 }

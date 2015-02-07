@@ -7,9 +7,11 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import net.bussiness.bdpush.AndroidPushMessage;
 import net.bussiness.model.YwnrDto;
 import net.bussiness.service.YwnrService;
-import net.bussiness.util.JsonStrUtils;
+import net.bussiness.util.Constants;
+import net.bussiness.util.JacksonUtils;
 import net.bussiness.util.StringUtils;
 
 import org.springframework.stereotype.Controller;
@@ -45,24 +47,30 @@ public class YwnrController {
 	}
 
 	@RequestMapping(value = "/{userId}/{ywId}/add", method = RequestMethod.POST)
-	public String add(YwnrDto ywnrDao) {
-		ywnrService.add(ywnrDao);
-		return "ywnr/ywnrs";
+	@ResponseBody
+	public String add(String ywnrDto) {
+		YwnrDto dto = (YwnrDto) JacksonUtils.json2Bean(ywnrDto, YwnrDto.class);
+		ywnrService.add(dto);
+		AndroidPushMessage.pushMessage(dto.getYwsq().getUserByApproverId(),
+				Constants.BD_PUSHTYPE_YWNR, dto);
+		return dto.getId() + "";
 	}
 
 	@RequestMapping(value = "/{userId}/{ywId}/delete", method = RequestMethod.POST)
 	@ResponseBody
-	public void delete(YwnrDto ywnrDao) {
-		ywnrService.delete(ywnrDao);
+	public void delete(String ywnrDto) {
+		YwnrDto dto = (YwnrDto) JacksonUtils.json2Bean(ywnrDto, YwnrDto.class);
+		ywnrService.delete(dto);
 	}
 
 	@RequestMapping(value = "/{userId}/{ywId}/update", method = RequestMethod.POST)
 	@ResponseBody
-	public void update(YwnrDto ywnrDao) {
-		if (ywnrDao.getId() == 0) {
-			ywnrService.add(ywnrDao);
+	public void update(String ywnrDto) {
+		YwnrDto dto = (YwnrDto) JacksonUtils.json2Bean(ywnrDto, YwnrDto.class);
+		if (dto.getId() == 0) {
+			ywnrService.add(dto);
 		} else {
-			ywnrService.update(ywnrDao);
+			ywnrService.update(dto);
 		}
 	}
 
@@ -83,7 +91,7 @@ public class YwnrController {
 		List<YwnrDto> list = (List<YwnrDto>) ywnrService
 				.findWithPageAndCondition(params, page, rows);
 		int totol = ywnrService.getRowsWithCondition(params);
-		System.out.println(JsonStrUtils.getJsonResult(totol, list));
-		return JsonStrUtils.getJsonResult(totol, list);
+		System.out.println(JacksonUtils.getJsonResult(totol, list));
+		return JacksonUtils.getJsonResult(totol, list);
 	}
 }

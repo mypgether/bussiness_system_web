@@ -15,7 +15,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
@@ -24,7 +23,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @Entity
 @Table(name = "dept", catalog = "bussiness_system")
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler",
-		"fieldHandler" })
+		"fieldHandler", "positions", "groupmsgs" })
 public class DeptDto implements java.io.Serializable {
 
 	// Fields
@@ -34,10 +33,8 @@ public class DeptDto implements java.io.Serializable {
 	private Integer createrId;
 	private Date createTime;
 	private String description;
-	@JsonIgnore
 	private Set<PositionDto> positions = new HashSet<PositionDto>(0);
-	@JsonIgnore
-	private Set<UserDto> users = new HashSet<UserDto>(0);
+	private Set<GroupmsgDto> groupmsgs = new HashSet<GroupmsgDto>(0);
 
 	// Constructors
 
@@ -47,13 +44,14 @@ public class DeptDto implements java.io.Serializable {
 
 	/** full constructor */
 	public DeptDto(String deptName, Integer createrId, Date createTime,
-			String description, Set<PositionDto> positions, Set<UserDto> users) {
+			String description, Set<PositionDto> positions,
+			Set<GroupmsgDto> groupmsgs) {
 		this.deptName = deptName;
 		this.createrId = createrId;
 		this.createTime = createTime;
 		this.description = description;
 		this.positions = positions;
-		this.users = users;
+		this.groupmsgs = groupmsgs;
 	}
 
 	// Property accessors
@@ -77,9 +75,8 @@ public class DeptDto implements java.io.Serializable {
 		this.deptName = deptName;
 	}
 
-	@Column(name = "createrId")
 	public Integer getCreaterId() {
-		return this.createrId;
+		return createrId;
 	}
 
 	public void setCreaterId(Integer createrId) {
@@ -114,20 +111,19 @@ public class DeptDto implements java.io.Serializable {
 		this.positions = positions;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "dept")
-	public Set<UserDto> getUsers() {
-		return this.users;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "group")
+	public Set<GroupmsgDto> getGroupmsgs() {
+		return groupmsgs;
 	}
 
-	public void setUsers(Set<UserDto> users) {
-		this.users = users;
+	public void setGroupmsgs(Set<GroupmsgDto> groupmsgs) {
+		this.groupmsgs = groupmsgs;
 	}
 
 	@Override
 	public String toString() {
-		return "DeptDao [id=" + id + ", deptName=" + deptName + ", createrId="
-				+ createrId + ", createTime=" + createTime + ", description="
-				+ description + "]";
+		return "DeptDao [id=" + id + ", deptName=" + deptName + ", createTime="
+				+ createTime + ", description=" + description + "]";
 	}
 
 }

@@ -27,6 +27,11 @@ public class YwsqServiceImpl implements YwsqService {
 	}
 
 	@Override
+	public void delete(String hql) {
+		baseDao.delete(hql);
+	}
+
+	@Override
 	public int getRows() {
 		Object rows = baseDao.getObject("select count(*) from YwsqDto");
 		long result = (Long) rows;
@@ -51,6 +56,12 @@ public class YwsqServiceImpl implements YwsqService {
 				"select count(*) from YwsqDto where 1=1"), params));
 		long result = (Long) rows;
 		return (int) result;
+	}
+
+	@Override
+	public List<YwsqDto> findWithCondition(Map<String, String> params) {
+		return (List<YwsqDto>) baseDao.findWithCondition(HqlUtils.getHql(
+				new StringBuffer("from YwsqDto where 1=1"), params));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -79,5 +90,17 @@ public class YwsqServiceImpl implements YwsqService {
 	@Override
 	public YwsqDto load(int id) {
 		return (YwsqDto) baseDao.getObject("from YwsqDto where ywId=" + id);
+	}
+
+	@Override
+	public List<YwsqDto> findWithPageAndHql(String hql, int page, int rows) {
+		return (List<YwsqDto>) baseDao.findWithPageAndHql(page, rows, hql);
+	}
+
+	@Override
+	public int getRowsWithHql(String hql) {
+		Object rows = baseDao.getObject(hql);
+		long result = (Long) rows;
+		return (int) result;
 	}
 }

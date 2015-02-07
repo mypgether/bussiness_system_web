@@ -1,6 +1,5 @@
 package net.bussiness.model;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,9 +34,11 @@ public class UserDto implements java.io.Serializable {
 	private PositionDto position;
 	private DeptDto dept;
 	private Integer userId;
+	private String pushUserId;
+	private String pushChannelId;
 	private String userName;
 	private String password;
-	private byte[] photo;
+	private String photoPath;
 	private String tel;
 	private String email;
 	private Date joinTime;
@@ -50,6 +51,10 @@ public class UserDto implements java.io.Serializable {
 	private Set<ChatmsgDto> chatmsgsForSenderId = new HashSet<ChatmsgDto>(0);
 	@JsonIgnore
 	private Set<ChatmsgDto> chatmsgsForReceiverId = new HashSet<ChatmsgDto>(0);
+	@JsonIgnore
+	private Set<GroupmsgDto> groupmsgsForSenderId = new HashSet<GroupmsgDto>(0);
+	@JsonIgnore
+	private Set<YwpjDto> ywpjsForRemarkerId = new HashSet<YwpjDto>(0);
 
 	// Constructors
 
@@ -59,17 +64,22 @@ public class UserDto implements java.io.Serializable {
 
 	/** full constructor */
 	public UserDto(PositionDto position, DeptDto dept, Integer userId,
-			String userName, String password, byte[] photo, String tel,
-			String email, Date joinTime, String description,
-			Set<YwsqDto> ywsqsForProposerId, Set<YwsqDto> ywsqsForApproverId,
+			String pushUserId, String pushChannelId, String userName,
+			String password, String photoPath, String tel, String email,
+			Date joinTime, String description, Set<YwsqDto> ywsqsForProposerId,
+			Set<YwsqDto> ywsqsForApproverId,
 			Set<ChatmsgDto> chatmsgsForSenderId,
-			Set<ChatmsgDto> chatmsgsForReceiverId) {
+			Set<ChatmsgDto> chatmsgsForReceiverId,
+			Set<GroupmsgDto> groupmsgsForSenderId,
+			Set<YwpjDto> ywpjsForRemarkerId) {
 		this.position = position;
 		this.dept = dept;
 		this.userId = userId;
+		this.pushUserId = pushUserId;
+		this.pushChannelId = pushChannelId;
 		this.userName = userName;
 		this.password = password;
-		this.photo = photo;
+		this.photoPath = photoPath;
 		this.tel = tel;
 		this.email = email;
 		this.joinTime = joinTime;
@@ -78,6 +88,8 @@ public class UserDto implements java.io.Serializable {
 		this.ywsqsForApproverId = ywsqsForApproverId;
 		this.chatmsgsForSenderId = chatmsgsForSenderId;
 		this.chatmsgsForReceiverId = chatmsgsForReceiverId;
+		this.groupmsgsForSenderId = groupmsgsForSenderId;
+		this.ywpjsForRemarkerId = ywpjsForRemarkerId;
 	}
 
 	// Property accessors
@@ -121,6 +133,24 @@ public class UserDto implements java.io.Serializable {
 		this.userId = userId;
 	}
 
+	@Column(name = "pushUserId")
+	public String getPushUserId() {
+		return pushUserId;
+	}
+
+	public void setPushUserId(String pushUserId) {
+		this.pushUserId = pushUserId;
+	}
+
+	@Column(name = "pushChannelId")
+	public String getPushChannelId() {
+		return pushChannelId;
+	}
+
+	public void setPushChannelId(String pushChannelId) {
+		this.pushChannelId = pushChannelId;
+	}
+
 	@Column(name = "userName")
 	public String getUserName() {
 		return this.userName;
@@ -139,13 +169,13 @@ public class UserDto implements java.io.Serializable {
 		this.password = password;
 	}
 
-	@Column(name = "photo")
-	public byte[] getPhoto() {
-		return this.photo;
+	@Column(name = "photoPath")
+	public String getPhotoPath() {
+		return photoPath;
 	}
 
-	public void setPhoto(byte[] photo) {
-		this.photo = photo;
+	public void setPhotoPath(String photoPath) {
+		this.photoPath = photoPath;
 	}
 
 	@Column(name = "tel")
@@ -221,13 +251,32 @@ public class UserDto implements java.io.Serializable {
 		this.chatmsgsForReceiverId = chatmsgsForReceiverId;
 	}
 
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userBySenderId")
+	public Set<GroupmsgDto> getGroupmsgsForSenderId() {
+		return groupmsgsForSenderId;
+	}
+
+	public void setGroupmsgsForSenderId(Set<GroupmsgDto> groupmsgsForSenderId) {
+		this.groupmsgsForSenderId = groupmsgsForSenderId;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userByRemarkerId")
+	public Set<YwpjDto> getYwpjsForRemarkerId() {
+		return ywpjsForRemarkerId;
+	}
+
+	public void setYwpjsForRemarkerId(Set<YwpjDto> ywpjsForRemarkerId) {
+		this.ywpjsForRemarkerId = ywpjsForRemarkerId;
+	}
+
 	@Override
 	public String toString() {
-		return "UserDao [id=" + id + ", userId=" + userId + ", userName="
-				+ userName + ", password=" + password + ", photo="
-				+ Arrays.toString(photo) + ", tel=" + tel + ", email=" + email
-				+ ", joinTime=" + joinTime + ", description=" + description
-				+ "]";
+		return "UserDao [id=" + id + ", userId=" + userId + ", pushUserId="
+				+ pushUserId + ", pushChannelId=" + pushChannelId
+				+ ", userName=" + userName + ", password=" + password
+				+ ", photoPath=" + photoPath + ", tel=" + tel + ", email="
+				+ email + ", joinTime=" + joinTime + ", description="
+				+ description + "]";
 	}
 
 }

@@ -12,11 +12,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
  * Chatmsg entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "chatmsg", catalog = "bussiness_system")
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler",
+		"fieldHandler" })
 public class ChatmsgDto implements java.io.Serializable {
 
 	// Fields
