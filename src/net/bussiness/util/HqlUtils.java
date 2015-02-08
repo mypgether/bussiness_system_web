@@ -12,7 +12,7 @@ public class HqlUtils {
 			String key = (String) entry.getKey();
 			String val = (String) entry.getValue();
 			if (!StringUtils.isBlank(val)) {
-				sb.append(" and " + key + " like '%" + val.trim() + "%'");
+				sb.append(" and " + key + " =" + val.trim());
 			}
 		}
 		return sb.toString();

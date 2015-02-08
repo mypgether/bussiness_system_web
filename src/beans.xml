@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
@@ -40,6 +41,7 @@
 				<prop key="hibernate.dialect">
 					org.hibernate.dialect.MySQLDialect
 				</prop>
+				<prop key="hibernate.connection.release_mode">after_transaction</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.format_sql">true</prop>
@@ -77,4 +79,9 @@
 			<tx:method name="apply*" propagation="REQUIRED" />
 		</tx:attributes>
 	</tx:advice>
+
+	<!-- 文件上传 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:defaultEncoding="utf-8" p:maxUploadSize="50000000" />
 </beans>

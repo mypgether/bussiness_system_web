@@ -27,6 +27,11 @@ public class YwnrServiceImpl implements YwnrService {
 	}
 
 	@Override
+	public void delete(String hql) {
+		baseDao.delete(hql);
+	}
+
+	@Override
 	public int getRows() {
 		Object rows = baseDao.getObject("select count(*) from YwnrDto");
 		long result = (Long) rows;
@@ -53,12 +58,21 @@ public class YwnrServiceImpl implements YwnrService {
 		return (int) result;
 	}
 
+	@Override
+	public List<YwnrDto> findWithCondition(Map<String, String> params) {
+		return (List<YwnrDto>) baseDao.findWithCondition(HqlUtils.getHql(
+				new StringBuffer("from YwnrDto where 1=1"), params));
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<YwnrDto> findWithPageAndCondition(Map<String, String> params,
 			int page, int rows) {
-		return (List<YwnrDto>) baseDao.findWithPage(page, rows, HqlUtils
-				.getHql(new StringBuffer("from YwnrDto where 1=1"), params));
+		return (List<YwnrDto>) baseDao.findWithPage(
+				page,
+				rows,
+				HqlUtils.getHql(new StringBuffer("from YwnrDto where 1=1"),
+						params) + " order by nrTime asc");
 	}
 
 	@Override
@@ -79,5 +93,17 @@ public class YwnrServiceImpl implements YwnrService {
 	@Override
 	public YwnrDto load(int id) {
 		return (YwnrDto) baseDao.getObject("from YwnrDto where ywId=" + id);
+	}
+
+	@Override
+	public List<YwnrDto> findWithPageAndHql(String hql, int page, int rows) {
+		return (List<YwnrDto>) baseDao.findWithPageAndHql(page, rows, hql);
+	}
+
+	@Override
+	public int getRowsWithHql(String hql) {
+		Object rows = baseDao.getObject(hql);
+		long result = (Long) rows;
+		return (int) result;
 	}
 }

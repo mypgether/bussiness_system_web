@@ -11,18 +11,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
  * YwnrPhotos entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "ywnr_photos", catalog = "bussiness_system")
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler",
+		"fieldHandler" })
 public class YwnrPhotosDto implements java.io.Serializable {
 
 	// Fields
 
 	private Integer id;
 	private YwnrDto ywnr;
-	private byte[] photo;
+	private String photoPath;
 
 	// Constructors
 
@@ -31,9 +35,9 @@ public class YwnrPhotosDto implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public YwnrPhotosDto(YwnrDto ywnr, byte[] photo) {
+	public YwnrPhotosDto(YwnrDto ywnr, String photoPath) {
 		this.ywnr = ywnr;
-		this.photo = photo;
+		this.photoPath = photoPath;
 	}
 
 	// Property accessors
@@ -58,19 +62,17 @@ public class YwnrPhotosDto implements java.io.Serializable {
 		this.ywnr = ywnr;
 	}
 
-	@Column(name = "photo")
-	public byte[] getPhoto() {
-		return this.photo;
+	@Column(name = "photoPath")
+	public String getPhotoPath() {
+		return photoPath;
 	}
 
-	public void setPhoto(byte[] photo) {
-		this.photo = photo;
+	public void setPhotoPath(String photoPath) {
+		this.photoPath = photoPath;
 	}
 
 	@Override
 	public String toString() {
-		return "YwnrPhotosDao [id=" + id + ", photo=" + Arrays.toString(photo)
-				+ "]";
+		return "YwnrPhotosDao [id=" + id + ", photoPath=" + photoPath + "]";
 	}
-
 }

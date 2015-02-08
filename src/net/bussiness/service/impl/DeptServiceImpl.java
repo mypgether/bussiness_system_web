@@ -62,6 +62,12 @@ public class DeptServiceImpl implements DeptService {
 		return (List<DeptDto>) baseDao.findWithPage(page, rows, "from DeptDto");
 	}
 
+	@Override
+	public List<DeptDto> findWithCondition(Map<String, String> params) {
+		return (List<DeptDto>) baseDao.findWithCondition(HqlUtils.getHql(
+				new StringBuffer("from DeptDto where 1=1"), params));
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<DeptDto> findWithPageAndCondition(Map<String, String> params,
@@ -79,5 +85,22 @@ public class DeptServiceImpl implements DeptService {
 	@Override
 	public DeptDto load(int id) {
 		return (DeptDto) baseDao.getObject("from DeptDto where id=" + id);
+	}
+
+	@Override
+	public List<DeptDto> findWithPageAndHql(String hql, int page, int rows) {
+		return (List<DeptDto>) baseDao.findWithPageAndHql(page, rows, hql);
+	}
+
+	@Override
+	public int getRowsWithHql(String hql) {
+		Object rows = baseDao.getObject(hql);
+		long result = (Long) rows;
+		return (int) result;
+	}
+
+	@Override
+	public void delete(String hql) {
+		baseDao.delete(hql);
 	}
 }

@@ -27,6 +27,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public void delete(String hql) {
+		baseDao.delete(hql);
+	}
+	@Override
 	public void delete(Object dto) {
 		baseDao.deleteObject(dto);
 	}
@@ -62,6 +66,12 @@ public class UserServiceImpl implements UserService {
 		return (List<UserDto>) baseDao.findWithPage(page, rows, "from UserDto");
 	}
 
+	@Override
+	public List<UserDto> findWithCondition(Map<String, String> params) {
+		return (List<UserDto>) baseDao.findWithCondition(HqlUtils.getHql(
+				new StringBuffer("from UserDto where 1=1"), params));
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserDto> findWithPageAndCondition(Map<String, String> params,
@@ -79,5 +89,17 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto load(int id) {
 		return (UserDto) baseDao.getObject("from UserDto where userId=" + id);
+	}
+
+	@Override
+	public List<UserDto> findWithPageAndHql(String hql, int page, int rows) {
+		return (List<UserDto>) baseDao.findWithPageAndHql(page, rows, hql);
+	}
+
+	@Override
+	public int getRowsWithHql(String hql) {
+		Object rows = baseDao.getObject(hql);
+		long result = (Long) rows;
+		return (int) result;
 	}
 }

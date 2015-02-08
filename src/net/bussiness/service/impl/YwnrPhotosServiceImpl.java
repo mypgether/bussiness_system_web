@@ -27,6 +27,11 @@ public class YwnrPhotosServiceImpl implements YwnrPhotosService {
 	}
 
 	@Override
+	public void delete(String hql) {
+		baseDao.delete(hql);
+	}
+
+	@Override
 	public int getRows() {
 		Object rows = baseDao.getObject("select count(*) from YwnrPhotosDto");
 		long result = (Long) rows;
@@ -52,6 +57,12 @@ public class YwnrPhotosServiceImpl implements YwnrPhotosService {
 				"select count(*) from YwnrPhotosDto where 1=1"), params));
 		long result = (Long) rows;
 		return (int) result;
+	}
+
+	@Override
+	public List<YwnrPhotosDto> findWithCondition(Map<String, String> params) {
+		return (List<YwnrPhotosDto>) baseDao.findWithCondition(HqlUtils.getHql(
+				new StringBuffer("from YwnrPhotosDto where 1=1"), params));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -82,5 +93,18 @@ public class YwnrPhotosServiceImpl implements YwnrPhotosService {
 	public YwnrPhotosDto load(int id) {
 		return (YwnrPhotosDto) baseDao
 				.getObject("from YwnrPhotosDto where ywId=" + id);
+	}
+
+	@Override
+	public List<YwnrPhotosDto> findWithPageAndHql(String hql, int page, int rows) {
+		return (List<YwnrPhotosDto>) baseDao
+				.findWithPageAndHql(page, rows, hql);
+	}
+
+	@Override
+	public int getRowsWithHql(String hql) {
+		Object rows = baseDao.getObject(hql);
+		long result = (Long) rows;
+		return (int) result;
 	}
 }

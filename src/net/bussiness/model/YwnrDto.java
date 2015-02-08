@@ -33,9 +33,12 @@ public class YwnrDto implements java.io.Serializable {
 	private YwsqDto ywsq;
 	private Date nrTime;
 	private String nrLocation;
+	private Integer fee;
 	private String description;
 	@JsonIgnore
 	private Set<YwnrPhotosDto> ywnrPhotoses = new HashSet<YwnrPhotosDto>(0);
+	@JsonIgnore
+	private Set<YwpjDto> ywpjs = new HashSet<YwpjDto>(0);
 
 	// Constructors
 
@@ -44,13 +47,16 @@ public class YwnrDto implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public YwnrDto(YwsqDto ywsq, Date nrTime, String nrLocation,
-			String description, Set<YwnrPhotosDto> ywnrPhotoses) {
+	public YwnrDto(YwsqDto ywsq, Date nrTime, String nrLocation, Integer fee,
+			String description, Set<YwnrPhotosDto> ywnrPhotoses,
+			Set<YwpjDto> ywpjs) {
 		this.ywsq = ywsq;
 		this.nrTime = nrTime;
 		this.nrLocation = nrLocation;
+		this.fee = fee;
 		this.description = description;
 		this.ywnrPhotoses = ywnrPhotoses;
+		this.ywpjs = ywpjs;
 	}
 
 	// Property accessors
@@ -93,6 +99,15 @@ public class YwnrDto implements java.io.Serializable {
 		this.nrLocation = nrLocation;
 	}
 
+	@Column(name = "fee")
+	public Integer getFee() {
+		return fee;
+	}
+
+	public void setFee(Integer fee) {
+		this.fee = fee;
+	}
+
 	@Column(name = "description")
 	public String getDescription() {
 		return this.description;
@@ -111,10 +126,20 @@ public class YwnrDto implements java.io.Serializable {
 		this.ywnrPhotoses = ywnrPhotoses;
 	}
 
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "ywnr")
+	public Set<YwpjDto> getYwpjs() {
+		return this.ywpjs;
+	}
+
+	public void setYwpjs(Set<YwpjDto> ywpjs) {
+		this.ywpjs = ywpjs;
+	}
+
 	@Override
 	public String toString() {
 		return "YwnrDao [id=" + id + ", nrTime=" + nrTime + ", nrLocation="
-				+ nrLocation + ", description=" + description + "]";
+				+ nrLocation + ", fee=" + fee + ", description=" + description
+				+ "]";
 	}
 
 }

@@ -9,20 +9,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
  * Ywpj entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "ywpj", catalog = "bussiness_system")
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler",
+		"fieldHandler" })
 public class YwpjDto implements java.io.Serializable {
 
 	// Fields
 
 	private Integer id;
-	private YwsqDto ywsq;
-	private Integer remarkerId;
-	private double ranker;
-	private String remark;
+	private YwnrDto ywnr;
+	private UserDto userByRemarkerId;
+	private byte[] remark;
 
 	// Constructors
 
@@ -31,11 +34,9 @@ public class YwpjDto implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public YwpjDto(YwsqDto ywsq, Integer remarkerId, double ranker,
-			String remark) {
-		this.ywsq = ywsq;
-		this.remarkerId = remarkerId;
-		this.ranker = ranker;
+	public YwpjDto(YwnrDto ywnr, UserDto userByRemarkerId, byte[] remark) {
+		this.ywnr = ywnr;
+		this.userByRemarkerId = userByRemarkerId;
 		this.remark = remark;
 	}
 
@@ -52,46 +53,31 @@ public class YwpjDto implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ywId", referencedColumnName = "ywId")
-	public YwsqDto getYwsq() {
-		return this.ywsq;
+	@JoinColumn(name = "ywnrId", referencedColumnName = "id")
+	public YwnrDto getYwnr() {
+		return this.ywnr;
 	}
 
-	public void setYwsq(YwsqDto ywsq) {
-		this.ywsq = ywsq;
+	public void setYwnr(YwnrDto ywnr) {
+		this.ywnr = ywnr;
 	}
 
-	@Column(name = "remarkerId")
-	public Integer getRemarkerId() {
-		return this.remarkerId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "remarkerId", referencedColumnName = "userId")
+	public UserDto getUserByRemarkerId() {
+		return userByRemarkerId;
 	}
 
-	public void setRemarkerId(Integer remarkerId) {
-		this.remarkerId = remarkerId;
-	}
-
-	@Column(name = "ranker", precision = 10, scale = 0)
-	public double getRanker() {
-		return this.ranker;
-	}
-
-	public void setRanker(double ranker) {
-		this.ranker = ranker;
+	public void setUserByRemarkerId(UserDto userByRemarkerId) {
+		this.userByRemarkerId = userByRemarkerId;
 	}
 
 	@Column(name = "remark")
-	public String getRemark() {
+	public byte[] getRemark() {
 		return this.remark;
 	}
 
-	public void setRemark(String remark) {
+	public void setRemark(byte[] remark) {
 		this.remark = remark;
 	}
-
-	@Override
-	public String toString() {
-		return "YwpjDao [id=" + id + ", remarkerId=" + remarkerId + ", ranker="
-				+ ranker + ", remark=" + remark + "]";
-	}
-
 }
