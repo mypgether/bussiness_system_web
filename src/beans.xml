@@ -74,9 +74,6 @@
 			<tx:method name="del*" propagation="REQUIRED" />
 			<tx:method name="update*" propagation="REQUIRED" />
 			<tx:method name="add*" propagation="REQUIRED" />
-			<tx:method name="find*" propagation="REQUIRED" />
-			<tx:method name="get*" propagation="REQUIRED" />
-			<tx:method name="apply*" propagation="REQUIRED" />
 		</tx:attributes>
 	</tx:advice>
 
