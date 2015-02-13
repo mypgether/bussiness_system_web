@@ -11,9 +11,9 @@
 		<servlet-name>bussiness</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- 下面是过滤器 -->
-	<!-- 添加UTF-8编码的过滤器 -->
+	<!-- 添加UTF-8编码的过滤器，一定要在opensessioninview之前 -->
 	<filter>
 		<filter-name>encoding</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -26,7 +26,7 @@
 		<filter-name>encoding</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
 	<!-- 保证session在前台页面之前不会关闭 -->
 	<filter>
 		<filter-name>openSessionInViewFilter</filter-name>
@@ -36,9 +36,9 @@
 		<filter-name>openSessionInViewFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
 	<!-- 下面是监听器 -->
-	<!-- 映射全局的hibernate配置文件 -->
+	<!-- Spring文件监听器 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -72,7 +72,7 @@
 		<servlet-name>default</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- 设置主页 -->
 	<welcome-file-list>
 		<welcome-file>hello.jsp</welcome-file>
